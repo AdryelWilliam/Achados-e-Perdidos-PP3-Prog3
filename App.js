@@ -26,38 +26,36 @@ const Login = () => {
         <Text style={{ marginVertical: 75, fontSize: 24}}>Login</Text>
         <Text  style={styles.text}>Email</Text>
         <TextInput
-        style={styles.input}
-        onChangeText={onChangeEmail}
-        value={email}
-        placeholder="Digite seu email" 
+          style={styles.input}
+          onChangeText={onChangeEmail}
+          value={email}
+          placeholder="Digite seu email"
+        />
+        <Text style={styles.text}>Senha</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeSenha}
+          value={senha}
+          placeholder="Digite sua senha"
+        />
+        <Pressable 
+          style={{fontSize: 30}}
+          onPress={() => Alert.alert('"Esqueceu a senha?" pressionado')}>
+          <Text>Esqueceu a senha?</Text>
+        </Pressable>
 
-      />
-      <Text style={styles.text}>Senha</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeSenha}
-        value={senha}
-        placeholder="Digite sua senha"
-      />
-      <Pressable 
-      style={{fontSize: 30}}
-      onPress={() => Alert.alert('"Esqueceu a senha?" pressionado')}>
-        <Text>Esqueceu a senha?</Text>
-     
-      </Pressable>
-      <Pressable 
-      style={styles.pressable}
-      onPress={() => Alert.alert('Botão de entrar pressionado')}>
-        <Text  style={{ color: '#121212' }}>Entrar</Text>
-     
-      </Pressable>
-      <Pressable 
-      style={[styles.pressable, { backgroundColor: "#D9D9D9", width: 170,  marginTop: 10 }]}
-      onPress={() => Alert.alert('Botão de cadastar pressionado')}>
-        <Text style={{ color: '#121212' }}>Cadastrar</Text>
-     
-      </Pressable>
-      
+        <Pressable
+          style={styles.pressable}
+          onPress={() => Alert.alert('Botão de entrar pressionado')}>
+          <Text  style={styles.text_botao}>Entrar</Text>
+        </Pressable>
+
+        <Pressable
+          style={[styles.pressable, { backgroundColor: "#D9D9D9", width: 170,  marginTop: 10 }]}
+          onPress={() => Alert.alert('Botão de Cadastar Pressionado')}>
+          <Text style={styles.text_botao}>Cadastrar</Text>
+        </Pressable>
+
       </SafeAreaView>
     </SafeAreaProvider>
   )
@@ -70,49 +68,81 @@ const Cadastrar = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <Text style={{ marginVertical: 75, fontSize: 24}}>Cadastar</Text>
+        <Text style={{ marginVertical: 75, fontSize: 24
+        }}>Cadastar</Text>
         <Text  style={styles.text}>Nome</Text>
         <TextInput
-        style={styles.input}
-        onChangeText={onChangeNome}
-        value={nome}
-        placeholder="Digite seu nome" 
+          style={styles.input}
+          onChangeText={onChangeNome}
+          value={nome}
+          placeholder="Digite seu nome"
+        />
 
-      />
         <Text  style={styles.text}>Email</Text>
-        <TextInput
-        style={styles.input}
-        onChangeText={onChangeEmail}
-        value={email}
-        placeholder="Digite seu email" 
 
-      />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeEmail}
+          value={email}
+          placeholder="Digite seu email"
+        />
+
       <Text style={styles.text}>Senha</Text>
+
       <TextInput
         style={styles.input}
         onChangeText={onChangeSenha}
         value={senha}
         placeholder="Digite sua senha"
       />
-      <Pressable 
-      style={styles.pressable}
-      onPress={() => Alert.alert('Botão de cadastar pressionado')}>
-        <Text style={{ color: '#121212' }}>Cadastrar</Text>
-     
+
+      <Pressable
+        style={styles.pressable}
+        onPress={() => Alert.alert('Botão de cadastar pressionado')}>
+        <Text style={styles.text_botao}>Cadastrar</Text>
       </Pressable>
       
       </SafeAreaView>
     </SafeAreaProvider>
   )
 }
+
+const Inicial = () => {
+  
+  return (
+
+    <SafeAreaProvider>
+      <SafeAreaView>
+
+      
+
+      </SafeAreaView>
+    </SafeAreaProvider>
+
+  )
+}
+
 function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Cadastrar" screenOptions={{headerStyle: {
         backgroundColor: '#D9D9D9'
       }}}>
-        <Stack.Screen name="Login" component={Login} options={{ headerShown: true, title: "Achados e Perdidos"}} />
-        <Stack.Screen name="Cadastrar" component={Cadastrar} /> 
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: true, title: "Achados e Perdidos", headerTitleAlign: 'center'}}
+        />
+        <Stack.Screen name="Cadastrar" component={Cadastrar} options={{ headerShown: true, title: "Achados e Perdidos", headerTitleAlign: 'center'}}
+        /> 
+          <Stack.Screen name="Inicial" component={Inicial} options={{ headerShown: true,
+          title: "Achados e Perdidos",
+          headerTitleAlign: 'center',
+          headerRight: () => (
+            <Icon
+              name = 'person'
+              type = ''
+            />
+          ),
+      }}
+        /> 
       </Stack.Navigator>
     </NavigationContainer>
     );
@@ -141,6 +171,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     fontSize: 17
   },
+  text_botao: {
+    color: '#121212',
+
+  },
   pressable: {
     backgroundColor: '#AFA9FF',
     width: 220,
@@ -149,7 +183,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     padding: 20,
     alignItems: 'center',
-     justifyContent: 'center',
+    justifyContent: 'center',
 
   }
 
