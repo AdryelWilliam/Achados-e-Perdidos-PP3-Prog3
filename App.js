@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { TextInput } from 'react-native';
-import { ListItem,SearchBar } from 'react-native-elements';
+import { ListItem, SearchBar, Icon, Image, Avatar } from 'react-native-elements';
 import { Header } from '@rneui/themed';
-import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { StyleSheet, Text, View, Pressable, Alert, FlatList } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -25,39 +24,49 @@ const Login = () => {
   const [senha, onChangeSenha]= useState("")
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <Text style={{ marginVertical: 75, fontSize: 24}}>Login</Text>
-        <Text  style={styles.text}>Email</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeEmail}
-          value={email}
-          placeholder="Digite seu email"
+      <SafeAreaView >
+        
+        <Header
+          centerComponent = {{
+            text: 'Achados e Perdidos - IFPE JG', 
+            color: '#060505'}}
+          containerStyle = {{backgroundColor: '#acabab'}}
         />
-        <Text style={styles.text}>Senha</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeSenha}
-          value={senha}
-          placeholder="Digite sua senha"
-        />
-        <Pressable 
-          style={{fontSize: 30}}
-          onPress={() => Alert.alert('"Esqueceu a senha?" pressionado')}>
-          <Text>Esqueceu a senha?</Text>
-        </Pressable>
 
-        <Pressable
-          style={styles.pressable}
-          onPress={() => Alert.alert('Botão de entrar pressionado')}>
-          <Text  style={styles.text_botao}>Entrar</Text>
-        </Pressable>
+        <View style={styles.container}>
+          <Text style={{ marginVertical: 75, fontSize: 24}}>Login</Text>
+          <Text  style={styles.text}>Email</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeEmail}
+            value={email}
+            placeholder="Digite seu email"
+          />
+          <Text style={styles.text}>Senha</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeSenha}
+            value={senha}
+            placeholder="Digite sua senha"
+          />
+          <Pressable 
+            style={{fontSize: 30}}
+            onPress={() => Alert.alert('"Esqueceu a senha?" pressionado')}>
+            <Text>Esqueceu a senha?</Text>
+          </Pressable>
 
-        <Pressable
-          style={[styles.pressable, { backgroundColor: "#D9D9D9", width: 170,  marginTop: 10 }]}
-          onPress={() => Alert.alert('Botão de Cadastar Pressionado')}>
-          <Text style={styles.text_botao}>Cadastrar</Text>
-        </Pressable>
+          <Pressable
+            style={styles.pressable}
+            onPress={() => Alert.alert('Botão de entrar pressionado')}>
+            <Text  style={styles.text_botao}>Entrar</Text>
+          </Pressable>
+
+          <Pressable
+            style={[styles.pressable, { backgroundColor: "#D9D9D9", width: 170,  marginTop: 10 }]}
+            onPress={() => Alert.alert('Botão de Cadastar Pressionado')}>
+            <Text style={styles.text_botao}>Cadastrar</Text>
+          </Pressable>
+        </View>
 
       </SafeAreaView>
     </SafeAreaProvider>
@@ -70,40 +79,51 @@ const Cadastrar = () => {
   const [nome, onChangeNome] = useState("");
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <Text style={{ marginVertical: 75, fontSize: 24
-        }}>Cadastar</Text>
-        <Text  style={styles.text}>Nome</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeNome}
-          value={nome}
-          placeholder="Digite seu nome"
+      <SafeAreaView>
+        <Header
+          centerComponent = {{
+            text: 'Achados e Perdidos - IFPE JG', 
+            color: '#060505'}}
+          containerStyle = {{backgroundColor: '#acabab'}}
         />
 
-        <Text  style={styles.text}>Email</Text>
+        <View style={styles.container}>
+      
+          <Text style={{ marginVertical: 75, fontSize: 24
+          }}>Cadastar</Text>
+          <Text  style={styles.text}>Nome</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeNome}
+            value={nome}
+            placeholder="Digite seu nome"
+          />
+
+          <Text  style={styles.text}>Email</Text>
+
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeEmail}
+            value={email}
+            placeholder="Digite seu email"
+          />
+
+        <Text style={styles.text}>Senha</Text>
 
         <TextInput
           style={styles.input}
-          onChangeText={onChangeEmail}
-          value={email}
-          placeholder="Digite seu email"
+          onChangeText={onChangeSenha}
+          value={senha}
+          placeholder="Digite sua senha"
         />
 
-      <Text style={styles.text}>Senha</Text>
+        <Pressable
+          style={styles.pressable}
+          onPress={() => Alert.alert('Botão de cadastar pressionado')}>
+          <Text style={styles.text_botao}>Cadastrar</Text>
+        </Pressable>
 
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeSenha}
-        value={senha}
-        placeholder="Digite sua senha"
-      />
-
-      <Pressable
-        style={styles.pressable}
-        onPress={() => Alert.alert('Botão de cadastar pressionado')}>
-        <Text style={styles.text_botao}>Cadastrar</Text>
-      </Pressable>
+      </View>
       
       </SafeAreaView>
     </SafeAreaProvider>
@@ -112,31 +132,26 @@ const Cadastrar = () => {
 
 const Inicial = () => {
   //de SearchBar - React Native elements
-  const [pesquisa, setPesquisa] = useState("");
+  //const [pesquisa, setPesquisa] = useState("");
+
+  const [ pesquisa, onChangePesquisa ] = useState("");
+
   const itens = [
     {
       nome: 'Item 1',
-      imagem_url: '<https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=apparel',
+      avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7CuFWYHxngNBxvuv_fCb6Gc_J0znbdDM2DIHX-xY8jQ&s',
+      //icon: 'apparel',
       descricao: 'O item 1 foi encontrado em tal lugar em tal dia'
     },
     {
       nome: 'Item 2',
-      imagem_url: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=cards_stack',
+      avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ6kRNdZzBxQ2nXriy7lsr72-ii7iBbzc7HfLqzDEK_w&s=10',
+      //icon: 'cards-stack',
       descricao: 'O item 2 foi encontrado em tal lugar em tal dia'
     },
   ]
 
    //do ListItem - React Native Elements
-
-   keyExtractor = (item, index) => index.toString()
-
-   renderItem = ({ item }) => (
-    <ListItem
-      title = {item.nome}
-      subtitle = {item.descricao}
-      imagem = {{source: {uri: item.imagem_url}}}
-    />
-   )
 
   return (
 
@@ -150,19 +165,38 @@ const Inicial = () => {
           rightComponent = {{
             icon: 'person', 
             color: '#1d1c1c'}}
+          containerStyle = {{backgroundColor: '#acabab'}}
         />
 
-        <SearchBar
+        {/*<SearchBar
           placeholder='Pesquisar...'
           onChangeText={this.setPesquisa}
           value = {pesquisa}
+        />*/}
+
+        <TextInput
+          style={styles.barra_pesquisa}
+          onChange = {onChangePesquisa}
+          value = {pesquisa}
         />
 
-        <FlatList
-          keyExtractor = {this.keyExtractor}
-          data = {itens}
-          renderItem={this.renderItem}
-        />
+        <View style = {styles.itens}>
+        {
+          itens.map(( item, i ) => (
+            <ListItem key = {i} style = {styles.item}>
+              <ListItem.Content>
+                <Avatar source = {{uri: item.avatar_url}} style={styles.imagem}/>
+                <ListItem.Title>
+                    {item.nome}
+                </ListItem.Title>
+                <ListItem.Subtitle>
+                    {item.descricao}
+                </ListItem.Subtitle>
+              </ListItem.Content>
+            </ListItem>
+            ))
+        }
+        </View>
 
       </SafeAreaView>
     </SafeAreaProvider>
@@ -177,10 +211,10 @@ function App() {
       <Stack.Navigator initialRouteName="Inicial" screenOptions={{headerStyle: {
         backgroundColor: '#D9D9D9'
       }}}>
-        <Stack.Screen name="Login" component={Login} options={{ headerShown: true, title: "Achados e Perdidos"}} />
-        <Stack.Screen name="Cadastrar" component={Cadastrar} />
-         <Stack.Screen name="Inicial" component={Inicial} options={{ headerShown: false }}
-          />
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false, title: "Achados e Perdidos"}} />
+        <Stack.Screen name="Cadastrar" component={Cadastrar}  options={{ headerShown: false, title: "Achados e Perdidos"}} />
+        <Stack.Screen name="Inicial" component={Inicial} options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
     );
@@ -193,7 +227,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   input: { 
     borderWidth: 2,
     borderRadius: 100,
@@ -204,6 +237,17 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     backgroundColor: '#D9D9D9',
   }, 
+  barra_pesquisa: { 
+    borderWidth: 2,
+    borderRadius: 100,
+    height: 40,
+    width: 320,
+    padding: 10,
+    margin: 10,
+    paddingLeft: 20,
+    backgroundColor: '#D9D9D9',
+    alignSelf: 'center',
+  },
   text: {
     marginEnd: 250,
     marginHorizontal: 30,
@@ -222,9 +266,23 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
-
-  }
-
+  },
+  itens: {
+    flexDirection: 'row',
+    alignItem: 'flex-start',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignContent: 'stretch',
+    gap: '10%',
+  },
+  item: {
+    width: '40%',
+    
+  },
+  imagem: {
+    height: 200,
+    width: 200,
+  },
 });
 
 export default App;
