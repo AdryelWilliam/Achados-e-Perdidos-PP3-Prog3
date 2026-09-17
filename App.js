@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { TextInput } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import { StyleSheet, Text, View, Pressable, Alert } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -105,6 +106,23 @@ const Cadastrar = () => {
     </SafeAreaProvider>
   )
 }
+
+const Inicial = () => {
+ 
+  return (
+
+    <SafeAreaProvider>
+      <SafeAreaView>
+
+     
+
+      </SafeAreaView>
+    </SafeAreaProvider>
+
+  )
+}
+
+
 function App() {
   return (
     <NavigationContainer>
@@ -112,7 +130,18 @@ function App() {
         backgroundColor: '#D9D9D9'
       }}}>
         <Stack.Screen name="Login" component={Login} options={{ headerShown: true, title: "Achados e Perdidos"}} />
-        <Stack.Screen name="Cadastrar" component={Cadastrar} /> 
+        <Stack.Screen name="Cadastrar" component={Cadastrar} />
+         <Stack.Screen name="Inicial" component={Inicial} options={{ headerShown: true,
+          title: "Achados e Perdidos",
+          headerTitleAlign: 'center',
+          headerRight: () => (
+            <Icon
+              name = 'person'
+              type = ''
+            />
+          ),
+      }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
     );
