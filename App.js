@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { TextInput } from 'react-native';
-import { ListItem } from 'react-native-elements';
-import { StyleSheet, Text, View, Pressable, Alert } from 'react-native';
+import { ListItem,SearchBar } from 'react-native-elements';
+import { Header } from '@rneui/themed';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { StyleSheet, Text, View, Pressable, Alert, FlatList } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute, NavigationContainer } from "@react-navigation/native";
@@ -108,13 +110,58 @@ const Cadastrar = () => {
 }
 
 const Inicial = () => {
- 
+  //de SearchBar - React Native elements
+  const [pesquisa, setPesquisa] = useState("");
+  const itens = [
+    {
+      nome: 'Item 1',
+      imagem_url: '<https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=apparel',
+      descricao: 'O item 1 foi encontrado em tal lugar em tal dia'
+    },
+    {
+      nome: 'Item 2',
+      imagem_url: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=cards_stack',
+      descricao: 'O item 2 foi encontrado em tal lugar em tal dia'
+    },
+  ]
+
+   //do ListItem - React Native Elements
+
+   keyExtractor = (item, index) => index.toString()
+
+   renderItem = ({ item }) => (
+    <ListItem
+      title = {item.nome}
+      subtitle = {item.descricao}
+      imagem = {{source: {uri: item.imagem_url}}}
+    />
+   )
+
   return (
 
     <SafeAreaProvider>
       <SafeAreaView>
 
-     
+        <Header
+          centerComponent = {{
+            text: 'Achados e Perdidos - IFPE JG', 
+            color: '#060505'}}
+          rightComponent = {{
+            icon: 'person', 
+            color: '#1d1c1c'}}
+        />
+
+        <SearchBar
+          placeholder='Pesquisar...'
+          onChangeText={this.setPesquisa}
+          value = {pesquisa}
+        />
+
+        <FlatList
+          keyExtractor = {this.keyExtractor}
+          data = {itens}
+          renderItem={this.renderItem}
+        />
 
       </SafeAreaView>
     </SafeAreaProvider>
@@ -126,22 +173,13 @@ const Inicial = () => {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Cadastrar" screenOptions={{headerStyle: {
+      <Stack.Navigator initialRouteName="Inicial" screenOptions={{headerStyle: {
         backgroundColor: '#D9D9D9'
       }}}>
         <Stack.Screen name="Login" component={Login} options={{ headerShown: true, title: "Achados e Perdidos"}} />
         <Stack.Screen name="Cadastrar" component={Cadastrar} />
-         <Stack.Screen name="Inicial" component={Inicial} options={{ headerShown: true,
-          title: "Achados e Perdidos",
-          headerTitleAlign: 'center',
-          headerRight: () => (
-            <Icon
-              name = 'person'
-              type = ''
-            />
-          ),
-      }}
-        />
+         <Stack.Screen name="Inicial" component={Inicial} options={{ headerShown: false }}
+          />
       </Stack.Navigator>
     </NavigationContainer>
     );
