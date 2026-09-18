@@ -7,14 +7,6 @@ import {  createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute, NavigationContainer } from "@react-navigation/native";
 
 
-const LoginScreen = () => {
-  return (
-    <View style={{ flex: 1, alignItems: 'centers', justifyContent: 'center' }}>
-      <Login/>
-    </View>
-  );
-}
-
 const Stack = createNativeStackNavigator();
 
 const Login = () => {
@@ -96,7 +88,7 @@ const Cadastrar = () => {
       />
       <Pressable 
       style={styles.pressable}
-      onPress={() => Alert.alert('Botão de cadastar pressionado')}>
+      onPress={() => Alert.alert('Botão "Cadastar" pressionado')}>
         <Text style={{ color: '#121212' }}>Cadastrar</Text>
      
       </Pressable>
@@ -104,6 +96,53 @@ const Cadastrar = () => {
       </SafeAreaView>
     </SafeAreaProvider>
   )
+}
+
+const Perfil = () => {
+  <SafeAreaProvider style={styles.container}>
+    <SafeAreaView>
+      <View testID="bloco1" style={{ flexDirection: row }}> {/* View do primeiro bloco: Foto de perfil + nome + email do usuário - facilita o uso do flexbox*/}
+        <image></image>
+        <Text>NOME</Text> {/* Deve receber o nome escolhido pelo usuário */}
+        <Text>exemplo@gmail.com</Text> {/* Deve receber o email escolhido pelo usuário - facilita o uso do flexbox*/}
+      </View>
+      <View testID="bloco2"> {/* View do segundo bloco: Botões */}
+        <Pressable
+        style={styles.pressablePerfil}
+        onPress={() => Alert.alert('Botão "Meu perfil" pressionado')}>
+          <Text>Meu perfil</Text>
+        </Pressable>
+        <Pressable
+        style={styles.FALTANDO}
+        onPress={() => Alert.alert('Botão "Configurações do perfil" pressionado')}>
+          <Text>Configurações do perfil</Text>
+        </Pressable>
+         <Pressable
+        style={styles.FALTANDO}
+        onPress={() => Alert.alert('Botão "Sair" pressionado')}>
+          <Text>Sair</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
+  </SafeAreaProvider>
+}
+const MeuPerfil = () => {
+  <SafeAreaProvider>
+    <SafeAreaView>
+      <View testID="bloco1" style={{ flexDirection: row }}> {/* View do primeiro bloco: Foto de perfil + nome + email do usuário - facilita o uso do flexbox*/}
+        <image></image>
+        <Text>NOME</Text> {/* Deve receber o nome escolhido pelo usuário */}
+        <Text>exemplo@gmail.com</Text> {/* Deve receber o email escolhido pelo usuário - facilita o uso do flexbox*/}
+      </View>
+      <View> 
+        <Text>NOME</Text>
+        <Text>Email</Text>
+        <Text>CPF</Text>
+        <Text>Matrícula</Text>
+        <Text>Senha</Text>
+      </View>
+    </SafeAreaView>
+  </SafeAreaProvider>
 }
 function App() {
   return (
@@ -149,8 +188,19 @@ const styles = StyleSheet.create({
     marginTop: 50,
     padding: 20,
     alignItems: 'center',
-     justifyContent: 'center',
+    justifyContent: 'center',
 
+  },
+
+  pressablePerfil: {
+    backgroundColor: '#F8F8F8',
+    width: 220,
+    height: 10,
+    borderRadius: 35,
+    marginTop: 50,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 
 });
