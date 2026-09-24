@@ -7,6 +7,7 @@ import { StyleSheet, Text, View, Pressable, Alert, FlatList } from 'react-native
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute, NavigationContainer } from "@react-navigation/native";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 
 const LoginScreen = () => {
@@ -201,6 +202,49 @@ const Inicial = () => {
       </SafeAreaView>
     </SafeAreaProvider>
 
+  )
+}
+
+const RegistrarItem = () => {
+  const [ titulo, setTitulo ] = useState("");
+  const [ descricao, setDescricao ] = useState("");
+
+  //de Dropdown Picker em: https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/usage
+  const [ open, setOpen ] = useState(false);
+  const [value, setValue] = useState(null);
+  const [opcoes, setOpcoes] = useState([
+    {label: 'Garrafa', value: 'garrafa'},
+    {label: 'Relógio', value: 'relogio'},
+  ]);
+
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView>
+
+        <Header
+          centerComponent = {{
+            text: 'Achados e Perdidos - IFPE JG', 
+            color: '#060505'}}
+          rightComponent = {{
+            icon: 'person', 
+            color: '#1d1c1c'}}
+          containerStyle = {{backgroundColor: '#acabab'}}
+        />
+
+        <View style={styles.container}>
+          
+          <DropDownPicker
+            open={open}
+            value={value}
+            opcoes={opcoes}
+            setOpen={setOpen}
+            setValue={setValue}
+            setOpcoes={setOpcoes}
+          />
+
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   )
 }
 
