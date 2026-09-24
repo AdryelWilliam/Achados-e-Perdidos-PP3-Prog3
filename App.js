@@ -99,38 +99,44 @@ const Cadastrar = () => {
 }
 
 const Perfil = () => {
-  <SafeAreaProvider style={styles.container}>
+  return (
+  <SafeAreaProvider style={[{backgroundColor: '#e42020'}, styles.container]}>
     <SafeAreaView>
-      <View testID="bloco1" style={{ flexDirection: row }}> {/* View do primeiro bloco: Foto de perfil + nome + email do usuário - facilita o uso do flexbox*/}
-        <image></image>
-        <Text>NOME</Text> {/* Deve receber o nome escolhido pelo usuário */}
-        <Text>exemplo@gmail.com</Text> {/* Deve receber o email escolhido pelo usuário - facilita o uso do flexbox*/}
+      <View style={{backgroundColor: '#D9D9D9', width: 400, height: 800, alignItems: 'center', justifyContent: 'center'}}>
+       <View style={{ backgroundColor: 'yellow' }}>
+        {/* <Image 
+          source={{
+            uri: ''
+          }}
+        /> */}
+        <Text>NOME</Text> 
+        <Text>exemplo@gmail.com</Text> 
       </View>
-      <View testID="bloco2"> {/* View do segundo bloco: Botões */}
-        <Pressable
-        style={styles.pressablePerfil}
-        onPress={() => Alert.alert('Botão "Meu perfil" pressionado')}>
-          <Text>Meu perfil</Text>
-        </Pressable>
-        <Pressable
-        style={styles.FALTANDO}
-        onPress={() => Alert.alert('Botão "Configurações do perfil" pressionado')}>
-          <Text>Configurações do perfil</Text>
-        </Pressable>
-         <Pressable
-        style={styles.FALTANDO}
-        onPress={() => Alert.alert('Botão "Sair" pressionado')}>
-          <Text>Sair</Text>
-        </Pressable>
+      <Pressable 
+      style={styles.pressablePerfil}
+      onPress={() => Alert.alert('Botão "Meu Perfil" pressionado')}>
+        <Text style={{ color: '#121212' }}>Meu Perfil</Text>
+      </Pressable>
+      <Pressable 
+      style={styles.pressablePerfil}
+      onPress={() => Alert.alert('Botão "Configurações do Perfil" pressionado')}>
+        <Text style={{ color: '#121212' }}>Configurações do Perfil</Text>
+      </Pressable>
+      <Pressable 
+      style={styles.pressablePerfil}
+      onPress={() => Alert.alert('Botão "Sair" pressionado')}>
+        <Text style={{ color: '#121212' }}>Sair</Text>
+      </Pressable>
       </View>
     </SafeAreaView>
   </SafeAreaProvider>
+  )
 }
 const MeuPerfil = () => {
+  return (
   <SafeAreaProvider>
     <SafeAreaView>
-      <View testID="bloco1" style={{ flexDirection: row }}> {/* View do primeiro bloco: Foto de perfil + nome + email do usuário - facilita o uso do flexbox*/}
-        <image></image>
+      <View style={{ flexDirection: row }}> {/* View do primeiro bloco: Foto de perfil + nome + email do usuário - facilita o uso do flexbox*/}
         <Text>NOME</Text> {/* Deve receber o nome escolhido pelo usuário */}
         <Text>exemplo@gmail.com</Text> {/* Deve receber o email escolhido pelo usuário - facilita o uso do flexbox*/}
       </View>
@@ -143,15 +149,18 @@ const MeuPerfil = () => {
       </View>
     </SafeAreaView>
   </SafeAreaProvider>
+  )
 }
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Cadastrar" screenOptions={{headerStyle: {
+      <Stack.Navigator initialRouteName="Perfil" screenOptions={{headerStyle: {
         backgroundColor: '#D9D9D9'
       }}}>
         <Stack.Screen name="Login" component={Login} options={{ headerShown: true, title: "Achados e Perdidos"}} />
         <Stack.Screen name="Cadastrar" component={Cadastrar} /> 
+        <Stack.Screen name="MeuPerfil" component={MeuPerfil} /> 
+        <Stack.Screen name="Perfil" component={Perfil} /> 
       </Stack.Navigator>
     </NavigationContainer>
     );
@@ -160,6 +169,7 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
