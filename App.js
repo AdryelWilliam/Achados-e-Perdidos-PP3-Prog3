@@ -8,11 +8,14 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute, NavigationContainer } from "@react-navigation/native";
 import DropDownPicker from 'react-native-dropdown-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+//https://github.com/react-native-datetimepicker/datetimepicker
 
 
 const LoginScreen = () => {
   return (
-    <View style={{ flex: 1, alignItems: 'centers', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Login/>
     </View>
   );
@@ -28,7 +31,7 @@ const Login = () => {
       <SafeAreaView >
         
         <Header
-          centerComponent = {{
+          leftComponent = {{
             text: 'Achados e Perdidos - IFPE JG', 
             color: '#060505'}}
           containerStyle = {{backgroundColor: '#acabab'}}
@@ -82,7 +85,7 @@ const Cadastrar = () => {
     <SafeAreaProvider>
       <SafeAreaView>
         <Header
-          centerComponent = {{
+          leftComponent = {{
             text: 'Achados e Perdidos - IFPE JG', 
             color: '#060505'}}
           containerStyle = {{backgroundColor: '#acabab'}}
@@ -107,6 +110,7 @@ const Cadastrar = () => {
             onChangeText={onChangeEmail}
             value={email}
             placeholder="Digite seu email"
+            keyboardType = 'email-address'
           />
 
         <Text style={styles.text}>Senha</Text>
@@ -116,6 +120,7 @@ const Cadastrar = () => {
           onChangeText={onChangeSenha}
           value={senha}
           placeholder="Digite sua senha"
+          keyboardType = 'visible-password'
         />
 
         <Pressable
@@ -160,7 +165,7 @@ const Inicial = () => {
       <SafeAreaView>
 
         <Header
-          centerComponent = {{
+          leftComponent = {{
             text: 'Achados e Perdidos - IFPE JG', 
             color: '#060505'}}
           rightComponent = {{
@@ -177,6 +182,8 @@ const Inicial = () => {
 
         <TextInput
           style={styles.barra_pesquisa}
+          inlineImageLeft='search_icon'
+          inputMode='search'
           onChange = {onChangePesquisa}
           value = {pesquisa}
         />
@@ -206,7 +213,9 @@ const Inicial = () => {
 }
 
 const RegistrarItem = () => {
+
   const [ titulo, setTitulo ] = useState("");
+  const [ local, setLocal ] = useState("");
   const [ descricao, setDescricao ] = useState("");
 
   //de Dropdown Picker em: https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/usage
@@ -217,21 +226,36 @@ const RegistrarItem = () => {
     {label: 'Relógio', value: 'relogio'},
   ]);
 
+  const itens = [
+    {id: 1, title: 'Garrafa', value: 'garrafa'},
+    {id: 2, title: 'Relógio', value: 'relogio'},
+  ]
+
+
   return (
     <SafeAreaProvider>
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
 
         <Header
-          centerComponent = {{
+          leftComponent = {{
             text: 'Achados e Perdidos - IFPE JG', 
             color: '#060505'}}
           rightComponent = {{
             icon: 'person', 
             color: '#1d1c1c'}}
-          containerStyle = {{backgroundColor: '#acabab'}}
+          containerStyle = {{backgroundColor: '#acabab', width: '100%'}}
         />
 
-        <View style={styles.container}>
+        <View style={styles.view}>
+          <Text>Título</Text>
+
+          <TextInput
+            style={styles.input_quest}
+            value={titulo}
+            onChange={setTitulo}
+          />
+
+          <Text>Tipo</Text>
           
           <DropDownPicker
             open={open}
@@ -240,6 +264,35 @@ const RegistrarItem = () => {
             setOpen={setOpen}
             setValue={setValue}
             setOpcoes={setOpcoes}
+            schema={{
+              label: 'title',
+              value: 'value'
+            }}
+          />
+
+          <Text>Local</Text>
+
+          <TextInput
+            style={styles.input_quest}
+            value={local}
+            onChange={setLocal}
+          />
+
+          <Text>Data</Text>
+          
+          <DateTimePicker 
+            mode="date" 
+            display="calendar"
+            onValueChange= {(event, date) => setDate(date)}
+          />
+
+          <Text>Descricao</Text>
+
+          <TextInput
+            style={styles.input_quest}
+            value={descricao}
+            onChange={setDescricao}
+            multiline = 'true'
           />
 
         </View>
@@ -252,13 +305,14 @@ const RegistrarItem = () => {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Inicial" screenOptions={{headerStyle: {
+      <Stack.Navigator initialRouteName="RegistrarItem" screenOptions={{headerStyle: {
         backgroundColor: '#D9D9D9'
       }}}>
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false, title: "Achados e Perdidos"}} />
         <Stack.Screen name="Cadastrar" component={Cadastrar}  options={{ headerShown: false, title: "Achados e Perdidos"}} />
         <Stack.Screen name="Inicial" component={Inicial} options={{ headerShown: false }}
         />
+        <Stack.Screen name="RegistrarItem" component={RegistrarItem} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
     );
@@ -271,6 +325,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  view: {
+    flex: 2,
+    backgroundColor: '#fff',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    justifyContent: 'center',
+    alignContent: 'stretch',
+  },
   input: { 
     borderWidth: 2,
     borderRadius: 100,
@@ -281,6 +343,15 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     backgroundColor: '#D9D9D9',
   }, 
+  input_quest: {
+    borderWidth: 1,
+    height: 40,
+    width: 320,
+    padding: 10,
+    margin: 20,
+    paddingLeft: 20,
+    backgroundColor: '#fffefe',
+  },
   barra_pesquisa: { 
     borderWidth: 2,
     borderRadius: 100,
