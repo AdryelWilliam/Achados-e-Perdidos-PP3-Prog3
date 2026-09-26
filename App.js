@@ -8,10 +8,6 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute, NavigationContainer } from "@react-navigation/native";
 import DropDownPicker from 'react-native-dropdown-picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
-
-//https://github.com/react-native-datetimepicker/datetimepicker
-
 
 const LoginScreen = () => {
   return (
@@ -155,6 +151,12 @@ const Inicial = () => {
       //icon: 'cards-stack',
       descricao: 'O item 2 foi encontrado em tal lugar em tal dia'
     },
+    {
+      nome: 'Item 3',
+      avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ6kRNdZzBxQ2nXriy7lsr72-ii7iBbzc7HfLqzDEK_w&s=10',
+      //icon: 'cards-stack',
+      descricao: 'O item 3 foi encontrado em tal lugar em tal dia'
+    },
   ]
 
    //do ListItem - React Native Elements
@@ -184,7 +186,7 @@ const Inicial = () => {
           style={styles.barra_pesquisa}
           inlineImageLeft='search_icon'
           inputMode='search'
-          onChange = {onChangePesquisa}
+          onChangeText = {onChangePesquisa}
           value = {pesquisa}
         />
 
@@ -214,12 +216,13 @@ const Inicial = () => {
 
 const RegistrarItem = () => {
 
-  const [ titulo, setTitulo ] = useState("");
-  const [ local, setLocal ] = useState("");
-  const [ descricao, setDescricao ] = useState("");
+  const [titulo, onChangeTitulo] = useState("");
+  const [local, onChangeLocal] = useState("");
+  const [descricao, onChangeDescricao] = useState("");
+  const [data, onChangeData] = useState("");
 
   //de Dropdown Picker em: https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/usage
-  const [ open, setOpen ] = useState(false);
+  const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [opcoes, setOpcoes] = useState([
     {label: 'Garrafa', value: 'garrafa'},
@@ -252,22 +255,22 @@ const RegistrarItem = () => {
           <TextInput
             style={styles.input_quest}
             value={titulo}
-            onChange={setTitulo}
+            onChangeText={onChangeTitulo}
           />
 
           <Text>Tipo</Text>
           
           <DropDownPicker
+            style={{
+              margin: 20,
+              width: 300,
+            }}
             open={open}
             value={value}
-            opcoes={opcoes}
+            itens={opcoes}
             setOpen={setOpen}
             setValue={setValue}
-            setOpcoes={setOpcoes}
-            schema={{
-              label: 'title',
-              value: 'value'
-            }}
+            setItens={setOpcoes}
           />
 
           <Text>Local</Text>
@@ -275,25 +278,31 @@ const RegistrarItem = () => {
           <TextInput
             style={styles.input_quest}
             value={local}
-            onChange={setLocal}
+            onChangeText={onChangeLocal}
           />
 
           <Text>Data</Text>
           
-          <DateTimePicker 
-            mode="date" 
-            display="calendar"
-            onValueChange= {(event, date) => setDate(date)}
+          <TextInput
+            style={styles.input_quest}
+            value={data}
+            onChangeText={onChangeData}
           />
 
           <Text>Descricao</Text>
 
           <TextInput
-            style={styles.input_quest}
+            style={styles.descricao}
             value={descricao}
-            onChange={setDescricao}
+            onChangeText={onChangeDescricao}
             multiline = 'true'
           />
+
+          <Pressable
+            style={styles.pressable}
+            onPress={() => Alert.alert('Botão de registrar item pressionado')}>
+            <Text style={styles.text_botao}>Registrar Item</Text>
+          </Pressable>
 
         </View>
       </SafeAreaView>
@@ -326,7 +335,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   view: {
-    flex: 2,
+    flex: 1,
+    height: '100%',
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'center',
@@ -352,15 +362,24 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     backgroundColor: '#fffefe',
   },
+  descricao: {
+    borderWidth: 1,
+    minHeight: 40,
+    width: 320,
+    padding: 10,
+    margin: 20,
+    paddingLeft: 20,
+    backgroundColor: '#fffefe',
+  },
   barra_pesquisa: { 
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 100,
     height: 40,
     width: 320,
     padding: 10,
     margin: 10,
     paddingLeft: 20,
-    backgroundColor: '#D9D9D9',
+    backgroundColor: '#e3e2e2',
     alignSelf: 'center',
   },
   text: {
@@ -386,14 +405,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItem: 'flex-start',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignContent: 'stretch',
-    gap: '10%',
+    justifyContent: 'flex-start',
+    gap: 25,
+    marginTop: 20,
+    marginLeft: 30,
+    marginRight: 30,
   },
   item: {
+    height: '50%',
+    maxHeight: 320,
     width: '40%',
-    
+    minWidth: 230,
+    maxWidth: 260,
+    borderWidth: 2,
+    borderRadius: 15,
+    borderColor: '#e2dcdc',
+    boxShadow: '0px 2px 4px rgba(59, 59, 59, 0.21)',
   },
+  //https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-shadow
   imagem: {
     height: 200,
     width: 200,
