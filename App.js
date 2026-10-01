@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { TextInput } from 'react-native';
-import { StyleSheet, Text, View, Pressable, Alert } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Alert, ScrollView } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute, NavigationContainer } from "@react-navigation/native";
+import * as ImagePicker from  "expo-image-picker";
+import { Ionicons } from  "@expo/vector-icons";
 
 
 const Stack = createNativeStackNavigator();
@@ -15,140 +17,241 @@ const Login = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <Text style={{ marginVertical: 75, fontSize: 24}}>Login</Text>
-        <Text  style={styles.text}>Email</Text>
-        <TextInput
-        style={styles.input}
-        onChangeText={onChangeEmail}
-        value={email}
-        placeholder="Digite seu email" 
+        <ScrollView>
+          <Text style={{ marginVertical: 75, fontSize: 24}}>Login</Text>
+          <Text  style={styles.text}>Email</Text>
+          <TextInput
+          style={styles.input}
+          onChangeText={onChangeEmail}
+          value={email}
+          placeholder="Digite seu email" 
 
-      />
-      <Text style={styles.text}>Senha</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeSenha}
-        value={senha}
-        placeholder="Digite sua senha"
-      />
-      <Pressable 
-      style={{fontSize: 30}}
-      onPress={() => Alert.alert('"Esqueceu a senha?" pressionado')}>
-        <Text>Esqueceu a senha?</Text>
-     
-      </Pressable>
-      <Pressable 
-      style={styles.pressable}
-      onPress={() => Alert.alert('Botão de entrar pressionado')}>
-        <Text  style={{ color: '#121212' }}>Entrar</Text>
-     
-      </Pressable>
-      <Pressable 
-      style={[styles.pressable, { backgroundColor: "#D9D9D9", width: 170,  marginTop: 10 }]}
-      onPress={() => Alert.alert('Botão de cadastar pressionado')}>
-        <Text style={{ color: '#121212' }}>Cadastrar</Text>
-     
-      </Pressable>
+        />
+        <Text style={styles.text}>Senha</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeSenha}
+          value={senha}
+          placeholder="Digite sua senha"
+        />
+        <Pressable 
+        style={{fontSize: 30}}
+        onPress={() => Alert.alert('"Esqueceu a senha?" pressionado')}>
+          <Text>Esqueceu a senha?</Text>
       
-      </SafeAreaView>
-    </SafeAreaProvider>
-  )
-}
-
-const Cadastrar = () => {
-  const [email, onChangeEmail] = useState("");
-  const [senha, onChangeSenha] = useState("");
-  const [nome, onChangeNome] = useState("");
-  return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <Text style={{ marginVertical: 75, fontSize: 24}}>Cadastar</Text>
-        <Text  style={styles.text}>Nome</Text>
-        <TextInput
-        style={styles.input}
-        onChangeText={onChangeNome}
-        value={nome}
-        placeholder="Digite seu nome" 
-
-      />
-        <Text  style={styles.text}>Email</Text>
-        <TextInput
-        style={styles.input}
-        onChangeText={onChangeEmail}
-        value={email}
-        placeholder="Digite seu email" 
-
-      />
-      <Text style={styles.text}>Senha</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeSenha}
-        value={senha}
-        placeholder="Digite sua senha"
-      />
-      <Pressable 
-      style={styles.pressable}
-      onPress={() => Alert.alert('Botão "Cadastar" pressionado')}>
-        <Text style={{ color: '#121212' }}>Cadastrar</Text>
-     
-      </Pressable>
+        </Pressable>
+        <Pressable 
+        style={styles.pressable}
+        onPress={() => Alert.alert('Botão de entrar pressionado')}>
+          <Text  style={{ color: '#121212' }}>Entrar</Text>
       
+        </Pressable>
+        <Pressable 
+        style={[styles.pressable, { backgroundColor: "#D9D9D9", width: 170,  marginTop: 10 }]}
+        onPress={() => Alert.alert('Botão de cadastar pressionado')}>
+          <Text style={{ color: '#121212' }}>Cadastrar</Text>
+      
+        </Pressable>
+          </ScrollView>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    )
+  }
+
+  const Cadastrar = () => {
+    const [email, onChangeEmail] = useState("");
+    const [senha, onChangeSenha] = useState("");
+    const [nome, onChangeNome] = useState("");
+    return (
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.container}>
+          <ScrollView>
+            <Text style={{ marginVertical: 75, fontSize: 24}}>Cadastar</Text>
+            <Text  style={styles.text}>Nome</Text>
+            <TextInput
+            style={styles.input}
+            onChangeText={onChangeNome}
+            value={nome}
+            placeholder="Digite seu nome" 
+
+          />
+            <Text  style={styles.text}>Email</Text>
+            <TextInput
+            style={styles.input}
+            onChangeText={onChangeEmail}
+            value={email}
+            placeholder="Digite seu email" 
+
+          />
+          <Text style={styles.text}>Senha</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeSenha}
+            value={senha}
+            placeholder="Digite sua senha"
+          />
+          <Pressable 
+          style={styles.pressable}
+          onPress={() => Alert.alert('Botão "Cadastar" pressionado')}>
+            <Text style={{ color: '#121212' }}>Cadastrar</Text>
+        
+          </Pressable>
+        </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
   )
 }
 
 const Perfil = () => {
+  const [fotoPerfil, setFotoPerfil] = useState(null);
+
+  const selecionarFoto = async () => {
+    try {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+      if (status !== 'granted') {
+        Alert.alert(
+          'Permissão necessária',
+          'Permita o acesso à sua galeria para escolher uma foto de perfil.'
+        );
+        return;
+      }
+
+      const resultado = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images'],
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.8,
+      });
+
+      if (!resultado.canceled) {
+        setFotoPerfil(resultado.assets[0].uri);
+      }
+    } catch (error) {
+      Alert.alert(
+        'Não foi possível selecionar a foto.'
+      );
+    }
+  };
   return (
-  <SafeAreaProvider style={[{backgroundColor: '#e42020'}, styles.container]}>
-    <SafeAreaView>
-      <View style={{backgroundColor: '#D9D9D9', width: 400, height: 800, alignItems: 'center', justifyContent: 'center'}}>
-       <View style={{ backgroundColor: 'yellow' }}>
-        {/* <Image 
-          source={{
-            uri: ''
-          }}
-        /> */}
-        <Text>NOME</Text> 
-        <Text>exemplo@gmail.com</Text> 
-      </View>
-      <Pressable 
-      style={styles.pressablePerfil}
-      onPress={() => Alert.alert('Botão "Meu Perfil" pressionado')}>
-        <Text style={{ color: '#121212' }}>Meu Perfil</Text>
-      </Pressable>
-      <Pressable 
-      style={styles.pressablePerfil}
-      onPress={() => Alert.alert('Botão "Configurações do Perfil" pressionado')}>
-        <Text style={{ color: '#121212' }}>Configurações do Perfil</Text>
-      </Pressable>
-      <Pressable 
-      style={styles.pressablePerfil}
-      onPress={() => Alert.alert('Botão "Sair" pressionado')}>
-        <Text style={{ color: '#121212' }}>Sair</Text>
-      </Pressable>
-      </View>
-    </SafeAreaView>
-  </SafeAreaProvider>
-  )
-}
-const MeuPerfil = () => {
-  return (
-  <SafeAreaProvider>
-    <SafeAreaView>
-      <View style={{ flexDirection: row }}> {/* View do primeiro bloco: Foto de perfil + nome + email do usuário - facilita o uso do flexbox*/}
-        <Text>NOME</Text> {/* Deve receber o nome escolhido pelo usuário */}
-        <Text>exemplo@gmail.com</Text> {/* Deve receber o email escolhido pelo usuário - facilita o uso do flexbox*/}
-      </View>
-      <View> 
-        <Text>NOME</Text>
-        <Text>Email</Text>
-        <Text>CPF</Text>
-        <Text>Matrícula</Text>
-        <Text>Senha</Text>
-      </View>
-    </SafeAreaView>
-  </SafeAreaProvider>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        
+          <View style={styles.div}>
+            <Pressable
+              style={styles.voltar}
+              onPress={() =>
+                Alert.alert('Botão voltar pressionado')
+              }
+            >
+              <Ionicons
+                name="chevron-back"
+                size={34}
+                color="#000"
+              />
+            </Pressable>
+          </View>
+
+          <View style={styles.perfil}>
+
+            <Pressable
+              style={styles.fotoContainer}
+              onPress={selecionarFoto}
+            >
+              {fotoPerfil ? (
+                <Image
+                  source={{ uri: fotoPerfil }}
+                  style={styles.foto}
+                />
+              ) : (
+                <Ionicons
+                  name="person-outline"
+                  size={62}
+                  color="#707070"
+                />
+              )}
+
+              <View style={styles.camera}>
+                <Ionicons
+                  name="camera-outline"
+                  size={18}
+                  color="#fff"
+                />
+              </View>
+            </Pressable>
+
+            <View style={styles.informacoes}>
+              <Text style={styles.nome}>NOME</Text>
+              <Text style={styles.email}>email@email.com</Text>
+            </View>
+          </View>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.botao,
+              pressed && styles.botaoPressionado,
+            ]}
+            onPress={() =>
+              Alert.alert('Meu Perfil', 'Botão "Meu Perfil" pressionado')
+            }
+          >
+            <Ionicons
+              name="person-outline"
+              size={29}
+              color="#aaa"
+            />
+
+            <Text style={styles.textoBotao}>
+              Meu Perfil
+            </Text>
+          </Pressable>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.botao,
+              pressed && styles.botaoPressionado,
+            ]}
+            onPress={() =>
+              Alert.alert(
+                'Botão "Configurações do Perfil" pressionado'
+              )
+            }
+          >
+            <Ionicons
+              name="settings-outline"
+              size={31}
+              color="#aaa"
+            />
+
+            <Text style={styles.textoBotao}>
+              Configurações do Perfil
+            </Text>
+          </Pressable>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.botao,
+              pressed && styles.botaoPressionado,
+            ]}
+            onPress={() =>
+              Alert.alert(
+                'Botão "Sair" pressionado'
+              )
+            }
+          >
+            <Ionicons
+              name="log-out-outline"
+              size={32}
+              color="#aaa"
+            />
+
+            <Text style={styles.textoBotao}>
+              Sair
+            </Text>
+          </Pressable>
+      </SafeAreaView>
+    </SafeAreaProvider>
   )
 }
 function App() {
@@ -159,7 +262,6 @@ function App() {
       }}}>
         <Stack.Screen name="Login" component={Login} options={{ headerShown: true, title: "Achados e Perdidos"}} />
         <Stack.Screen name="Cadastrar" component={Cadastrar} /> 
-        <Stack.Screen name="MeuPerfil" component={MeuPerfil} /> 
         <Stack.Screen name="Perfil" component={Perfil} /> 
       </Stack.Navigator>
     </NavigationContainer>
@@ -169,12 +271,18 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-
+  div:{
+    width: '100%',
+    flex:1, 
+    paddingHorizontal: 48,
+    paddingTop: 25,
+    backgroundColor: '#fff',
+  },
   input: { 
     borderWidth: 2,
     borderRadius: 100,
@@ -197,22 +305,93 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     marginTop: 50,
     padding: 20,
-    alignItems: 'center',
+    alignItems: 'center' ,
     justifyContent: 'center',
 
   },
-
-  pressablePerfil: {
-    backgroundColor: '#F8F8F8',
-    width: 220,
-    height: 10,
-    borderRadius: 35,
-    marginTop: 50,
-    padding: 20,
+  perfil: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 8,
+    marginBottom: 35,
+    paddingHorizontal: 2,
+  },
+
+  fotoContainer: {
+    width: 106,
+    height: 106,
+    borderRadius: 53,
+    backgroundColor: '#d6d6d6',
     justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    overflow: 'visible',
+  },
+
+  foto: {
+    width: 106,
+    height: 106,
+    borderRadius: 53,
+  },
+
+  camera: {
+    position: 'absolute',
+    right: -2,
+    bottom: 1,
+    width: 31,
+    height: 31,
+    borderRadius: 16,
+    backgroundColor: '#777',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#fff',
+  },
+
+  informacoes: {
+    marginLeft: 35,
+    justifyContent: 'center',
+  },
+
+  nome: {
+    fontSize: 23,
+    fontWeight: '400',
+    color: '#111',
+    marginBottom: 2,
+  },
+
+  email: {
+    fontSize: 21,
+    fontWeight: '400',
+    color: '#111',
+  },
+
+  botao: {
+    width: '60%',
+    height: 70,
+    borderRadius: 36,
+    backgroundColor: '#f7f7f7',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 27,
+    marginBottom: 39,
+  },
+
+  botaoPressionado: {
+    backgroundColor: '#eeeeee',
+    transform: [{ scale: 0.99 }],
+  },
+
+  textoBotao: {
+    fontSize: 28,
+    fontWeight: '400',
+    color: '#111',
+    marginLeft: 19,
+  },
+  voltar: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignSelf: 'flex-start'
   }
-
 });
-
 export default App;
