@@ -3,10 +3,10 @@ import { StatusBar } from 'expo-status-bar';
 import { TextInput } from 'react-native';
 import { ListItem, SearchBar, Icon, Image, Avatar } from 'react-native-elements';
 import { Header } from '@rneui/themed';
-import { StyleSheet, Text, View, Pressable, Alert, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Alert, FlatList } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useRoute, NavigationContainer } from "@react-navigation/native";
+import { useRoute, NavigationContainer, useNavigation } from "@react-navigation/native";
 
 const itens = [
     {
@@ -28,7 +28,7 @@ const itens = [
       descricao: 'O item 3 foi encontrado em tal lugar em tal dia'
     },
   ]
-  
+
   const Item = ({item}) => (
     <View style={styles.item}>
       <Avatar
@@ -43,16 +43,19 @@ const itens = [
 const Inicial = () => {
   //de SearchBar - React Native elements
   //const [pesquisa, setPesquisa] = useState("");
+  const navigation = useNavigation();
 
   const [ pesquisa, onChangePesquisa ] = useState("");
 
-  
+
   const renderItem = ({item}) => {
 
     return (
-      <Item
+      <View style={styles.itens}>
+        <Item
         item={item}
-      />
+        />
+      </View>
     )
   }
 
@@ -78,19 +81,24 @@ const Inicial = () => {
             value = {pesquisa}
           />
 
-          <View style = {styles.itens}>
 
-            <Pressable style = {styles.itens}>
-              <Text style={styles.addItem}>Registrar Item Perdido</Text>
-            </Pressable>
-        
+          <Pressable
+            style={styles.reg_item}
+            onPress={() => navigation.navigate('RegistrarItem')}
+          >
+            <Text style={styles.text_botao}>Registrar Item Perdido</Text>
+          </Pressable>
+
+          <View style={styles.itens}>
+
             <FlatList
-              data = {itens}
+              data={itens}
               renderItem={renderItem}
               scrollEnabled={true}
             />
+
           </View>
-          
+
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -103,31 +111,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ececec',
-    justifyContent: 'center',
     alignItens: 'center',
-    height: '100%',
-    width: '100%',
+    height: '100%'
   },
   view: {
     flex: 1,
     height: '100%',
     backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'stretch',
   },
-  input: { 
-    borderWidth: 2,
-    borderRadius: 100,
-    height: 40,
-    width: 320,
-    padding: 10,
-    margin: 10,
-    paddingLeft: 20,
-    backgroundColor: '#D9D9D9',
-  }, 
-  barra_pesquisa: { 
+  barra_pesquisa: {
     borderWidth: 1,
     borderRadius: 100,
     height: 40,
@@ -143,22 +138,18 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     fontSize: 17
   },
-  addItem: {
-    bottom: 20, 
+  reg_item: {
+    borderRadius: 100,
+    height: 40,
+    width: 200,
+    padding: 10,
+    margin: 10,
+    backgroundColor: '#94b6f6',
+    alignSelf: 'flex-start'
   },
   text_botao: {
     color: '#121212',
-
-  },
-  pressable: {
-    backgroundColor: '#AFA9FF',
-    width: 220,
-    height: 10,
-    borderRadius: 35,
-    marginTop: 50,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignSelf: 'center'
   },
   itens: {
     flexDirection: 'row',
@@ -169,6 +160,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 30,
     marginRight: 30,
+    width: '100%',
+    height: '100%',
   },
   item: {
     height: 250,
