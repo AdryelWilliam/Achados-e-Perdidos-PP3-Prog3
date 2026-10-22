@@ -12,15 +12,15 @@ function App() {
       <Stack.Navigator initialRouteName="Inicial" screenOptions={{headerStyle: {
         backgroundColor: '#c0bcbc'
       }}}>
-        <Stack.Screen name="Inicial" component={Inicial} options={{ 
-          headerShown: true, 
+        <Stack.Screen name="Inicial" component={Inicial} options={{
+          headerShown: true,
           title: "Achados e Perdidos"
-          
+
           }} />
         <Stack.Screen name="RegistrarItem" component={RegistrarItem} options={{
           headerShown: true,
           title: "Achados e Perdidos",
-        }}/> 
+        }}/>
       </Stack.Navigator>
     </NavigationContainer>
     );

@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { TextInput } from 'react-native';
 import { ListItem, SearchBar, Icon, Image, Avatar } from 'react-native-elements';
 import { Header } from '@rneui/themed';
-import { StyleSheet, Text, View, Pressable, Alert, FlatList } from 'react-native';
+import { StyleSheet, Text, ScrollView, Pressable, Alert } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute, NavigationContainer } from "@react-navigation/native";
@@ -35,7 +35,7 @@ const RegistrarItem = () => {
 
   //https://docs.expo.dev/versions/latest/sdk/imagepicker/
 
-  
+  /*
   const [imagem, setImagem] = useState <string | null> (null);
   const escolherImagem = async () => {
     const permissaoResultado = await ImagePicker.requestMediaLibraryPermissionAsync();
@@ -78,23 +78,13 @@ const RegistrarItem = () => {
     if(!resultado.canceled){
       setImagem(resultado.assets[0].uri);
     }
-  };
+  };*/
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
 
-        <Header
-          leftComponent = {{
-            text: 'Achados e Perdidos - IFPE JG', 
-            color: '#060505'}}
-          rightComponent = {{
-            icon: 'person', 
-            color: '#1d1c1c'}}
-          containerStyle = {{backgroundColor: '#acabab', width: '100%'}}
-        />
-
-        <View style={styles.view}>
+        <ScrollView ContentContainerStyle={styles.view}>
           <Text style={styles.text}>Foto</Text>
           <Pressable
             style={styles.pressable}
@@ -107,7 +97,7 @@ const RegistrarItem = () => {
             onPress={(tirarFoto) => Alert.alert('Botão de  tirar foto pressionado')}>
             <Text style={styles.text_botao}>Tirar Foto</Text>
           </Pressable>
-          
+
           <Text  style={styles.text}>Título</Text>
 
           <TextInput
@@ -117,7 +107,7 @@ const RegistrarItem = () => {
           />
 
           <Text style={styles.text}>Tipo</Text>
-          
+
           <DropDownPicker
             style={{
               margin: 20,
@@ -140,7 +130,7 @@ const RegistrarItem = () => {
           />
 
           <Text style={styles.text}>Data</Text>
-          
+
           <TextInput
             style={styles.input_quest}
             value={data}
@@ -153,7 +143,7 @@ const RegistrarItem = () => {
             style={styles.descricao}
             value={descricao}
             onChangeText={onChangeDescricao}
-            //multiline = 'true'
+            multiline = {true}
           />
 
           <Pressable
@@ -162,7 +152,7 @@ const RegistrarItem = () => {
             <Text style={styles.text_botao}>Registrar Item</Text>
           </Pressable>
 
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
   )
@@ -176,14 +166,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   view: {
-    flex: 1,
-    height: '100%',
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'center',
     justifyContent: 'center',
     alignContent: 'stretch',
-  }, 
+  },
   input_quest: {
     borderWidth: 1,
     height: 40,

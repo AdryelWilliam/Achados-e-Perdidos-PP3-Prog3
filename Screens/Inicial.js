@@ -6,15 +6,9 @@ import { Header } from '@rneui/themed';
 import { StyleSheet, Text, View, Pressable, Alert, FlatList } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useRoute, NavigationContainer } from "@react-navigation/native";
+import { useRoute, NavigationContainer, useNavigation } from "@react-navigation/native";
 
-const Inicial = () => {
-  //de SearchBar - React Native elements
-  //const [pesquisa, setPesquisa] = useState("");
-
-  const [ pesquisa, onChangePesquisa ] = useState("");
-
-  const itens = [
+const itens = [
     {
       nome: 'Item 1',
       avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7CuFWYHxngNBxvuv_fCb6Gc_J0znbdDM2DIHX-xY8jQ&s',
@@ -35,51 +29,75 @@ const Inicial = () => {
     },
   ]
 
+  const Item = ({item}) => (
+    <View style={styles.item}>
+      <Avatar
+        source={{uri: item.avatar_url}}
+        style={styles.imagem}
+      />
+      <Text style={styles.text_item}>{item.nome}</Text>
+      <Text style={styles.text_item}>{item.descricao}</Text>
+    </View>
+  );
+
+const Inicial = () => {
+  //de SearchBar - React Native elements
+  //const [pesquisa, setPesquisa] = useState("");
+  const navigation = useNavigation();
+
+  const [ pesquisa, onChangePesquisa ] = useState("");
+
+
+  const renderItem = ({item}) => {
+
+    return (
+      <View style={styles.itens}>
+        <Item
+        item={item}
+        />
+      </View>
+    )
+  }
+
    //do ListItem - React Native Elements
 
   return (
     <SafeAreaProvider>
       <SafeAreaView>
-        {/*<Header
-          leftComponent = {{
-            text: 'Achados e Perdidos - IFPE JG', 
-            color: '#060505'}}
-          rightComponent = {{
-            icon: 'person', 
-            color: '#1d1c1c'}}
-          containerStyle = {{backgroundColor: '#acabab'}}
-        />*/}
+        <View style={styles.container}>
 
-        {/*<SearchBar
-          placeholder='Pesquisar...'
-          onChangeText={this.setPesquisa}
-          value = {pesquisa}
-        />*/}
+          {/*<SearchBar
+            placeholder='Pesquisar...'
+            onChangeText={this.setPesquisa}
+            value = {pesquisa}
+          />*/}
 
-        <TextInput
-          style={styles.barra_pesquisa}
-          inlineImageLeft="search_icon"
-          inputMode="search"
-          onChangeText={onChangePesquisa}
-          value={pesquisa}
-        />
+          <TextInput
+            style={styles.barra_pesquisa}
+            inlineImageLeft='search_icon'
+            inputMode='search'
+            onChangeText = {onChangePesquisa}
+            value = {pesquisa}
+          />
 
-        <View style={styles.itens}>
-          <Pressable style={styles.item} onPress={() => navigation.navigate()}>
-            <Text style={styles.addItem}>Adicionar Item Perdido</Text>
+
+          <Pressable
+            style={styles.reg_item}
+            onPress={() => navigation.navigate('RegistrarItem')}
+          >
+            <Text style={styles.text_botao}>Registrar Item Perdido</Text>
           </Pressable>
-          {itens.map((item, i) => (
-            <ListItem key={i} style={styles.item}>
-              <ListItem.Content>
-                <Avatar
-                  source={{ uri: item.avatar_url }}
-                  style={styles.imagem}
-                />
-                <ListItem.Title>{item.nome}</ListItem.Title>
-                <ListItem.Subtitle>{item.descricao}</ListItem.Subtitle>
-              </ListItem.Content>
-            </ListItem>
-          ))}
+
+          <View style={styles.itens}>
+
+            <FlatList
+              data={itens}
+              renderItem={renderItem}
+              scrollEnabled={true}
+            />
+
+          </View>
+
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -90,30 +108,19 @@ const Inicial = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#ececec',
+    alignItens: 'center',
+    height: '100%'
   },
   view: {
     flex: 1,
     height: '100%',
     backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'stretch',
   },
-  input: { 
-    borderWidth: 2,
-    borderRadius: 100,
-    height: 40,
-    width: 320,
-    padding: 10,
-    margin: 10,
-    paddingLeft: 20,
-    backgroundColor: '#D9D9D9',
-  }, 
-  barra_pesquisa: { 
+  barra_pesquisa: {
     borderWidth: 1,
     borderRadius: 100,
     height: 40,
@@ -129,23 +136,18 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     fontSize: 17
   },
-  addItem: {
-    alignSelf: 'center',
-    bototm: 20, 
+  reg_item: {
+    borderRadius: 100,
+    height: 40,
+    width: 200,
+    padding: 10,
+    margin: 10,
+    backgroundColor: '#94b6f6',
+    alignSelf: 'flex-start'
   },
   text_botao: {
     color: '#121212',
-
-  },
-  pressable: {
-    backgroundColor: '#AFA9FF',
-    width: 220,
-    height: 10,
-    borderRadius: 35,
-    marginTop: 50,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignSelf: 'center'
   },
   itens: {
     flexDirection: 'row',
@@ -156,22 +158,28 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 30,
     marginRight: 30,
+    width: '100%',
+    height: '100%',
   },
   item: {
-    height: '50%',
-    maxHeight: 320,
-    width: '40%',
-    minWidth: 230,
-    maxWidth: 260,
+    height: 250,
+    width: 250,
     borderWidth: 2,
     borderRadius: 15,
     borderColor: '#e2dcdc',
     boxShadow: '0px 2px 4px rgba(59, 59, 59, 0.21)',
+    backgroundColor: '#ededed'
+  },
+  text_item: {
+    fontSize: 12,
+    margin: 5,
   },
   //https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-shadow
   imagem: {
-    height: 200,
-    width: 200,
+    height: 150,
+    width: 150,
+    alignSelf: 'center',
+    margin: 8,
   },
 });
 
