@@ -76,6 +76,7 @@ const Inicial = () => {
             style={styles.barra_pesquisa}
             inlineImageLeft='search_icon'
             inputMode='search'
+            placeholder="Pesquisar..."
             onChangeText = {onChangePesquisa}
             value = {pesquisa}
           />

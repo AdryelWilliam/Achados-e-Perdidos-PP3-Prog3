@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { TextInput } from 'react-native';
 import { ListItem, SearchBar, Icon, Image, Avatar } from 'react-native-elements';
 import { Header } from '@rneui/themed';
-import { StyleSheet, Text, ScrollView, Pressable, Alert } from 'react-native';
+import { StyleSheet, Text, ScrollView, Pressable, Alert, View } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute, NavigationContainer } from "@react-navigation/native";
@@ -22,16 +22,11 @@ const RegistrarItem = () => {
 
   //de Dropdown Picker em: https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/usage
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [opcoes, setOpcoes] = useState([
+  const [Value, setValue] = useState(null);
+  const [itens, setItens] = useState([
     {label: 'Garrafa', value: 'garrafa'},
     {label: 'Relógio', value: 'relogio'},
   ]);
-
-  const itens = [
-    {id: 1, title: 'Garrafa', value: 'garrafa'},
-    {id: 2, title: 'Relógio', value: 'relogio'},
-  ]
 
   //https://docs.expo.dev/versions/latest/sdk/imagepicker/
 
@@ -85,73 +80,78 @@ const RegistrarItem = () => {
       <SafeAreaView style={styles.container}>
 
         <ScrollView ContentContainerStyle={styles.view}>
-          <Text style={styles.text}>Foto</Text>
-          <Pressable
-            style={styles.pressable}
-            onPress={(escolherImagem) => Alert.alert('Botão de  escolher imagem pressionado')}>
-            <Text style={styles.text_botao}>Escolher Imagem</Text>
-          </Pressable>
+          <View style={styles.quest}>
+            <Text style={styles.text}>Foto</Text>
+            <Pressable
+              style={styles.pressable}
+              onPress={(escolherImagem) => Alert.alert('Botão de  escolher imagem pressionado')}>
+              <Text style={styles.text_botao}>Escolher Imagem</Text>
+            </Pressable>
 
-          <Pressable
-            style={styles.pressable}
-            onPress={(tirarFoto) => Alert.alert('Botão de  tirar foto pressionado')}>
-            <Text style={styles.text_botao}>Tirar Foto</Text>
-          </Pressable>
+            <Pressable
+              style={styles.pressable}
+              onPress={(tirarFoto) => Alert.alert('Botão de  tirar foto pressionado')}>
+              <Text style={styles.text_botao}>Tirar Foto</Text>
+            </Pressable>
 
-          <Text  style={styles.text}>Título</Text>
+            <Text  style={styles.text}>Título</Text>
 
-          <TextInput
-            style={styles.input_quest}
-            value={titulo}
-            onChangeText={onChangeTitulo}
-          />
+            <TextInput
+              style={styles.input_quest}
+              value={titulo}
+              onChangeText={onChangeTitulo}
+            />
 
-          <Text style={styles.text}>Tipo</Text>
+            <Text style={styles.text}>Tipo</Text>
 
-          <DropDownPicker
-            style={{
-              margin: 20,
-              width: 300,
-            }}
-            open={open}
-            value={value}
-            itens={opcoes}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItens={setOpcoes}
-          />
+            <DropDownPicker
+              style={styles.dropdown}
+              value={Value}
+              searchable={true}
+              searchPlaceholder="Pesquisar..."
+              placeholder="Selecione um item"
+              schema={{
+                label: itens.title,
+                value: itens.val
+              }}
+              open={open}
+              itens={itens}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItens={setItens}
+            />
 
-          <Text style={styles.text}>Local</Text>
+            <Text style={styles.text}>Local</Text>
 
-          <TextInput
-            style={styles.input_quest}
-            value={local}
-            onChangeText={onChangeLocal}
-          />
+            <TextInput
+              style={styles.input_quest}
+              value={local}
+              onChangeText={onChangeLocal}
+            />
 
-          <Text style={styles.text}>Data</Text>
+            <Text style={styles.text}>Data</Text>
 
-          <TextInput
-            style={styles.input_quest}
-            value={data}
-            onChangeText={onChangeData}
-          />
+            <TextInput
+              style={styles.input_quest}
+              value={data}
+              onChangeText={onChangeData}
+            />
 
-          <Text style={styles.text}>Descricao</Text>
+            <Text style={styles.text}>Descricao</Text>
 
-          <TextInput
-            style={styles.descricao}
-            value={descricao}
-            onChangeText={onChangeDescricao}
-            multiline = {true}
-          />
+            <TextInput
+              style={styles.descricao}
+              value={descricao}
+              onChangeText={onChangeDescricao}
+              multiline = {true}
+            />
 
-          <Pressable
-            style={styles.pressable}
-            onPress={() => Alert.alert('Botão de registrar item pressionado')}>
-            <Text style={styles.text_botao}>Registrar Item</Text>
-          </Pressable>
-
+            <Pressable
+              style={styles.pressable}
+              onPress={() => Alert.alert('Botão de registrar item pressionado')}>
+              <Text style={styles.text_botao}>Registrar Item</Text>
+            </Pressable>
+          </View>
         </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -161,7 +161,7 @@ const RegistrarItem = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ececec',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -171,6 +171,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     justifyContent: 'center',
     alignContent: 'stretch',
+    width: '100%'
+  },
+  quest: {
+    width: '100%',
+    height: '80%',
+  },
+  dropdown: {
+    margin: 20,
+    width: 300,
   },
   input_quest: {
     borderWidth: 1,
@@ -204,7 +213,8 @@ const styles = StyleSheet.create({
     width: 220,
     height: 10,
     borderRadius: 35,
-    marginTop: 50,
+    marginTop: 10,
+    marginBottom: 10,
     padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
