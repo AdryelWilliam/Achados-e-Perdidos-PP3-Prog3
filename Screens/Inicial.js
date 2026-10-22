@@ -38,10 +38,8 @@ const Inicial = () => {
    //do ListItem - React Native Elements
 
   return (
-
     <SafeAreaProvider>
       <SafeAreaView>
-
         {/*<Header
           leftComponent = {{
             text: 'Achados e Perdidos - IFPE JG', 
@@ -60,37 +58,32 @@ const Inicial = () => {
 
         <TextInput
           style={styles.barra_pesquisa}
-          inlineImageLeft='search_icon'
-          inputMode='search'
-          onChangeText = {onChangePesquisa}
-          value = {pesquisa}
+          inlineImageLeft="search_icon"
+          inputMode="search"
+          onChangeText={onChangePesquisa}
+          value={pesquisa}
         />
 
-        <View style = {styles.itens}>
+        <View style={styles.itens}>
           <Pressable style={styles.item} onPress={() => navigation.navigate()}>
             <Text style={styles.addItem}>Adicionar Item Perdido</Text>
           </Pressable>
-        {
-          itens.map(( item, i ) => (
-            <ListItem key = {i} style = {styles.item}>
+          {itens.map((item, i) => (
+            <ListItem key={i} style={styles.item}>
               <ListItem.Content>
-                <Avatar source = {{uri: item.avatar_url}} style={styles.imagem}/>
-                <ListItem.Title>
-                    {item.nome}
-                </ListItem.Title>
-                <ListItem.Subtitle>
-                    {item.descricao}
-                </ListItem.Subtitle>
+                <Avatar
+                  source={{ uri: item.avatar_url }}
+                  style={styles.imagem}
+                />
+                <ListItem.Title>{item.nome}</ListItem.Title>
+                <ListItem.Subtitle>{item.descricao}</ListItem.Subtitle>
               </ListItem.Content>
             </ListItem>
-            ))
-        }
+          ))}
         </View>
-
       </SafeAreaView>
     </SafeAreaProvider>
-
-  )
+  );
 }
 
 
