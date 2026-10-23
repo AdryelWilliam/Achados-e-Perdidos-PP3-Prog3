@@ -2,6 +2,7 @@ import {  createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute, NavigationContainer } from "@react-navigation/native";
 import Inicial from './Inicial';
 import RegistrarItem from './RegistrarItem';
+import Item from './Item';
 
 
 const Stack = createNativeStackNavigator(); {/* O que é isso?? */}
@@ -20,6 +21,10 @@ function App() {
         <Stack.Screen name="RegistrarItem" component={RegistrarItem} options={{
           headerShown: true,
           title: "Achados e Perdidos",
+        }}/>
+        <Stack.Screen name="Item" component={Item} options={{
+          headerShown: true,
+          title: 'Achados e Perdidos'
         }}/>
       </Stack.Navigator>
     </NavigationContainer>

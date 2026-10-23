@@ -9,7 +9,24 @@ import {  createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute, NavigationContainer } from "@react-navigation/native";
 import DropDownPicker from 'react-native-dropdown-picker';
 import * as ImagePicker from 'expo-image-picker';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
+//https://reactnative.dev/docs/tutorial
+
+//firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyDCpGyqwi_AYbqILpxbBDs-L3YZn1ugzQE",
+  authDomain: "achados-e-perdidos-37247.firebaseapp.com",
+  projectId: "achados-e-perdidos-37247",
+  storageBucket: "achados-e-perdidos-37247.firebasestorage.app",
+  messagingSenderId: "314245637379",
+  appId: "1:314245637379:web:34194680a6499a74997536",
+  measurementId: "G-5MJWC7VLN2"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 const Stack = createNativeStackNavigator();
 

@@ -12,12 +12,15 @@
     "body-parser": "^2.3.0",
     "cloudinary": "^2.11.0",
     "cors": "^2.8.6",
-    "expo": "^57.0.28",
+    "expo": "^57.0.31",
+    "expo-font": "~57.0.4",
     "expo-image-picker": "~57.0.20",
     "expo-status-bar": "~57.0.1",
     "express": "^5.2.1",
+    "firebase": "^13.1.0",
+    "firebase-tools": "^15.34.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3",
+    "react-dom": "^19.2.3",
     "react-native": "^0.86.3",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-elements": "^3.4.3",
@@ -25,7 +28,7 @@
     "react-native-screens": "~4.26.0",
     "react-native-vector-icons": "^10.3.0",
     "react-native-web": "^0.21.0",
-    "expo-font": "~57.0.4"
+    "react-test-renderer": "19.2.3"
   },
   "publishConfig": {
     "executableFiles": [

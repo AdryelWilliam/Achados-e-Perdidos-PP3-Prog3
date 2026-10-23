@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
-import { TextInput } from 'react-native';
+import { TextInput, TouchableHighlight } from 'react-native';
 import { ListItem, SearchBar, Icon, Image, Avatar } from 'react-native-elements';
 import { Header } from '@rneui/themed';
 import { StyleSheet, Text, View, Pressable, Alert, FlatList } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 import {  createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute, NavigationContainer, useNavigation } from "@react-navigation/native";
+
+//https://reactnative.dev/docs/tutorial
 
 const itens = [
     {
@@ -52,9 +54,15 @@ const Inicial = () => {
 
     return (
       <View style={styles.itens}>
-        <Item
-        item={item}
-        />
+        <TouchableHighlight 
+          activeOpacity={0.6}
+          underlayColor='#ddd'
+          onPress = {() => navigation.navigate(Item)}
+        >
+          <Item
+          item={item}
+          />
+        </TouchableHighlight>
       </View>
     )
   }
@@ -89,7 +97,7 @@ const Inicial = () => {
             <Text style={styles.text_botao}>Registrar Item Perdido</Text>
           </Pressable>
 
-          <View style={styles.itens}>
+          <View style={styles.container}>
 
             <FlatList
               data={itens}
