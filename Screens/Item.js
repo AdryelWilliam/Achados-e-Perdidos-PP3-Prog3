@@ -34,16 +34,16 @@ const Item = ({ route }) => {
       <Text style={styles.valor}>{item.tipo || 'Não informado'}</Text>
 
       <Text style={styles.rotulo}>Local</Text>
-      <Text style={styles.valor}>{item.local}</Text>
+      <Text style={styles.valor}>{item.local || 'Não informado'}</Text>
 
       <Text style={styles.rotulo}>Data</Text>
-      <Text style={styles.valor}>{item.data}</Text>
+      <Text style={styles.valor}>{item.data || 'Não informado'}</Text>
 
       <Text style={styles.rotulo}>Descrição</Text>
       <Text style={styles.valor}>{item.descricao || 'Sem descrição'}</Text>
 
       <Text style={styles.rotulo}>Registrado por</Text>
-      <Text style={styles.valor}>{item.donoNome || item.donoEmail}</Text>
+      <Text style={styles.valor}>{item.donoNome || item.donoEmail || 'Não informado'}</Text>
     </ScrollView>
   );
 };

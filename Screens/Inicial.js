@@ -18,6 +18,34 @@ import { db } from './firebaseConfig';
 
 //https://reactnative.dev/docs/tutorial
 
+const itens = [
+    {
+      nome: 'Item 1',
+      avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7CuFWYHxngNBxvuv_fCb6Gc_J0znbdDM2DIHX-xY8jQ&s',
+      //icon: 'apparel',
+      descricao: 'O item 1 foi encontrado em tal lugar em tal dia'
+    },
+    {
+      nome: 'Item 2',
+      avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ6kRNdZzBxQ2nXriy7lsr72-ii7iBbzc7HfLqzDEK_w&s=10',
+      //icon: 'cards-stack',
+      descricao: 'O item 2 foi encontrado em tal lugar em tal dia'
+    },
+    {
+      nome: 'Item 3',
+      avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ6kRNdZzBxQ2nXriy7lsr72-ii7iBbzc7HfLqzDEK_w&s=10',
+      //icon: 'cards-stack',
+      descricao: 'O item 3 foi encontrado em tal lugar em tal dia'
+    },
+  ]
+
+const itensExemplo = itens.map((item, indice) => ({
+  id: `exemplo-${indice}`,
+  titulo: item.nome,
+  imagem: item.avatar_url,
+  descricao: item.descricao,
+}));
+
 const ItemCard = ({ item }) => (
   <View style={styles.item}>
     {item.imagem ? (
@@ -31,7 +59,9 @@ const ItemCard = ({ item }) => (
       </View>
     )}
     <Text style={styles.text_item}>{item.titulo}</Text>
-    <Text style={styles.text_item}>{item.local} - {item.data}</Text>
+    {item.local || item.data ? (
+      <Text style={styles.text_item}>{item.local} - {item.data}</Text>
+    ) : null}
     <Text style={styles.text_item} numberOfLines={2}>{item.descricao}</Text>
   </View>
 );
@@ -42,7 +72,7 @@ const Inicial = () => {
   const navigation = useNavigation();
 
   const [pesquisa, onChangePesquisa] = useState("");
-  const [itens, setItens] = useState([]);
+  const [itensBanco, setItensBanco] = useState([]);
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
@@ -50,7 +80,7 @@ const Inicial = () => {
     const cancelar = onSnapshot(
       consulta,
       (snapshot) => {
-        setItens(
+        setItensBanco(
           snapshot.docs.map((documento) => {
             const { criadoEm, ...dados } = documento.data();
             return { id: documento.id, ...dados };
@@ -64,7 +94,7 @@ const Inicial = () => {
   }, []);
 
   const termo = pesquisa.trim().toLowerCase();
-  const itensFiltrados = itens.filter((item) =>
+  const itensFiltrados = [...itensBanco, ...itensExemplo].filter((item) =>
     !termo ||
     [item.titulo, item.local, item.data].some((campo) =>
       (campo || '').toLowerCase().includes(termo)
